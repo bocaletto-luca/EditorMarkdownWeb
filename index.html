@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Primary Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Editor Webapp Online • Bocaletto Luca</title>
+  <meta name="description" content="A lightweight, single-page Markdown editor with split-view preview, theme toggle, auto-save & export.">
+  <meta name="keywords" content="Markdown, editor, WYSIWYG, split view, dark mode, auto-save, export">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Markdown Editor • Bocaletto Luca">
+  <meta property="og:description" content="A lightweight, single-page Markdown editor with split-view preview, theme toggle, auto-save & export.">
+  <meta property="og:url" content="https://github.com/bocaletto-luca/markdown-editor">
+  <meta property="og:site_name" content="Markdown Editor">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Markdown Editor • Bocaletto Luca">
+  <meta name="twitter:description" content="A lightweight, single-page Markdown editor with split-view preview, theme toggle, auto-save & export.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://github.com/bocaletto-luca/markdown-editor">
+
+  <!-- Styles -->
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Theme Variables */
+    :root {
+      --light-bg: #fff;    --light-text: #333;
+      --dark-bg:  #1e1e1e; --dark-text: #ddd;
+      --border:   #ccc;    --border-dark: #444;
+      --toolbar-h: 56px;
+    }
+
+    /* Theme Classes */
+    body.light { background: var(--light-bg); color: var(--light-text); }
+    body.dark  { background: var(--dark-bg);  color: var(--dark-text); }
+
+    /* Header */
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--toolbar-h); background: #f7f7f7;
+      display: flex; align-items: center; padding: 0 1rem;
+      border-bottom: 1px solid var(--border); z-index: 10;
+    }
+    body.dark header { background: #2b2b2b; border-color: var(--border-dark); }
+    header h1 { font-size: 1.25rem; flex: 1; }
+
+    /* Toolbar inside header */
+    #toolbar { display: flex; gap: .5rem; }
+    #toolbar button {
+      padding: .5rem .75rem; border: none; border-radius: 4px;
+      background: #e0e0e0; cursor: pointer; font-size: .9rem;
+    }
+    body.dark #toolbar button { background: #3c3c3c; }
+
+    /* Main split-view below header */
+    #main {
+      position: absolute; top: var(--toolbar-h); bottom: 0; left: 0; right: 0;
+      display: flex; overflow: hidden;
+    }
+    #editor, #preview {
+      flex: 1; padding: 1rem; overflow-y: auto;
+    }
+    #editor { border-right: 1px solid var(--border); }
+    body.dark #editor { border-right-color: var(--border-dark); }
+
+    #md-input {
+      width: 100%; height: 100%; border: none; resize: none;
+      background: transparent; color: inherit; font-size: 1rem; line-height: 1.5;
+    }
+    #md-input:focus { outline: none; }
+
+    /* Responsive stack */
+    @media (max-width: 768px) {
+      #main { flex-direction: column; }
+      #editor { border-right: none; border-bottom: 1px solid var(--border); }
+      body.dark #editor { border-bottom-color: var(--border-dark); }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: .75rem;
+      font-size: .8rem; border-top: 1px solid var(--border);
+    }
+    body.dark footer { border-color: var(--border-dark); }
+  </style>
+</head>
+<body class="light">
+
+  <!-- Header with Title & Toolbar -->
+  <header>
+    <h1>Markdown Editor</h1>
+    <div id="toolbar">
+      <button id="export-md">Export .md</button>
+      <button id="export-html">Export .html</button>
+      <button id="toggle-theme">Toggle Theme</button>
+    </div>
+  </header>
+
+  <!-- Main Editor / Preview -->
+  <div id="main">
+    <div id="editor">
+      <textarea id="md-input" placeholder="Start typing in Markdown…"># Welcome!
+Write your Markdown on the left, see preview on the right.</textarea>
+    </div>
+    <div id="preview"></div>
+  </div>
+
+  <!-- Footer with Author & License -->
+  <footer>
+    © 2025 Bocaletto Luca •
+    <a href="https://github.com/bocaletto-luca" target="_blank">github.com/bocaletto-luca</a> •
+    Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPLv3</a>
+  </footer>
+
+  <!-- Showdown.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+  <script>
+    // Elements
+    const ta    = document.getElementById('md-input');
+    const pv    = document.getElementById('preview');
+    const btnMd = document.getElementById('export-md');
+    const btnHt = document.getElementById('export-html');
+    const btnTh = document.getElementById('toggle-theme');
+
+    // Converter & Storage Keys
+    const conv = new showdown.Converter({ simplifiedAutoLink: true });
+    const KEY   = 'md-editor-content';
+    const THEME = 'md-editor-theme';
+
+    // Initialize content & theme
+    ta.value = localStorage.getItem(KEY) || ta.value;
+    document.body.className = localStorage.getItem(THEME) || 'light';
+
+    // Render & Auto-Save
+    function render() {
+      pv.innerHTML = conv.makeHtml(ta.value);
+      localStorage.setItem(KEY, ta.value);
+    }
+    ta.addEventListener('input', render);
+    window.addEventListener('load', render);
+
+    // Download helper
+    function download(name, data, type) {
+      const blob = new Blob([data], { type });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // Export handlers
+    btnMd.addEventListener('click', () => download('document.md', ta.value, 'text/markdown'));
+    btnHt.addEventListener('click', () => {
+      const htmlDoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Exported</title></head><body>${conv.makeHtml(ta.value)}</body></html>`;
+      download('document.html', htmlDoc, 'text/html');
+    });
+
+    // Theme toggle
+    btnTh.addEventListener('click', () => {
+      const next = document.body.className === 'light' ? 'dark' : 'light';
+      document.body.className = next;
+      localStorage.setItem(THEME, next);
+    });
+  </script>
+</body>
+</html>
