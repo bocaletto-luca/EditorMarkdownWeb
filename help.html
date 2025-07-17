@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Markdown Syntax Guide</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f9f9f9;
+    }
+    header, footer {
+      background: #444;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      margin-right: 1rem;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3 {
+      margin-top: 2rem;
+      color: #222;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #ddd;
+    }
+    code {
+      background: #eef;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+    }
+    .example {
+      margin: 1rem 0 2rem;
+    }
+    .example .rendered {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 2rem 0;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Markdown Syntax Guide</h1>
+  <p>Complete reference for writing Markdown documents</p>
+</header>
+
+<nav>
+  <a href="#headings">Headings</a>
+  <a href="#paragraphs">Paragraphs & Line Breaks</a>
+  <a href="#emphasis">Emphasis</a>
+  <a href="#lists">Lists</a>
+  <a href="#links-images">Links & Images</a>
+  <a href="#code">Code</a>
+  <a href="#blockquotes">Blockquotes</a>
+  <a href="#tables">Tables</a>
+  <a href="#hr">Horizontal Rules</a>
+  <a href="#misc">Miscellaneous</a>
+</nav>
+
+<main>
+
+  <!-- Headings -->
+  <h2 id="headings">1. Headings</h2>
+  <p>Use <code>#</code> symbols to create headings. Number of <code>#</code>s equals heading level.</p>
+  <div class="example">
+    <pre><code># H1 Heading
+## H2 Heading
+### H3 Heading
+#### H4 Heading
+##### H5 Heading
+###### H6 Heading</code></pre>
+    <div class="rendered">
+      <h1>H1 Heading</h1>
+      <h2>H2 Heading</h2>
+      <h3>H3 Heading</h3>
+      <h4>H4 Heading</h4>
+      <h5>H5 Heading</h5>
+      <h6>H6 Heading</h6>
+    </div>
+  </div>
+
+  <!-- Paragraphs & Line Breaks -->
+  <h2 id="paragraphs">2. Paragraphs & Line Breaks</h2>
+  <p>Separate paragraphs with a blank line. End a line with two spaces or a backslash for a line break.</p>
+  <div class="example">
+    <pre><code>This is one paragraph.
+
+This is another paragraph with a line break.␣␣
+Next line.</code></pre>
+    <div class="rendered">
+      <p>This is one paragraph.</p>
+      <p>This is another paragraph with a line break.<br>
+      Next line.</p>
+    </div>
+  </div>
+
+  <!-- Emphasis -->
+  <h2 id="emphasis">3. Emphasis</h2>
+  <p>Use <code>*</code> or <code>_</code> for italics, double for bold, and triple for bold italics.</p>
+  <div class="example">
+    <pre><code>*italic* or _italic_
+**bold** or __bold__
+***bold italic*** or ___bold italic___</code></pre>
+    <div class="rendered">
+      <p><em>italic</em> or <em>italic</em><br>
+      <strong>bold</strong> or <strong>bold</strong><br>
+      <strong><em>bold italic</em></strong> or <strong><em>bold italic</em></strong></p>
+    </div>
+  </div>
+
+  <!-- Lists -->
+  <h2 id="lists">4. Lists</h2>
+
+  <h3>Unordered Lists</h3>
+  <div class="example">
+    <pre><code>- Item A
+* Item B
++ Item C</code></pre>
+    <div class="rendered">
+      <ul>
+        <li>Item A</li>
+        <li>Item B</li>
+        <li>Item C</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Ordered Lists</h3>
+  <div class="example">
+    <pre><code>1. First
+2. Second
+10. Tenth</code></pre>
+    <div class="rendered">
+      <ol>
+        <li>First</li>
+        <li>Second</li>
+        <li>Tenth</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>Nested Lists</h3>
+  <div class="example">
+    <pre><code>1. Step one
+   - Sub-item
+     1. Sub-sub-item
+2. Step two</code></pre>
+    <div class="rendered">
+      <ol>
+        <li>Step one
+          <ul>
+            <li>Sub-item
+              <ol>
+                <li>Sub-sub-item</li>
+              </ol>
+            </li>
+          </ul>
+        </li>
+        <li>Step two</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Links & Images -->
+  <h2 id="links-images">5. Links & Images</h2>
+  <p>Inline and reference-style links; images use a similar syntax with <code>!</code>.</p>
+
+  <h3>Inline Links</h3>
+  <div class="example">
+    <pre><code>[OpenAI](https://openai.com)</code></pre>
+    <div class="rendered"><p><a href="https://openai.com" target="_blank">OpenAI</a></p></div>
+  </div>
+
+  <h3>Reference Links</h3>
+  <div class="example">
+    <pre><code>[GitHub][gh]
+
+[gh]: https://github.com</code></pre>
+    <div class="rendered"><p><a href="https://github.com" target="_blank">GitHub</a></p></div>
+  </div>
+
+  <h3>Images</h3>
+  <div class="example">
+    <pre><code>![Alt text](https://via.placeholder.com/150 "Optional title")</code></pre>
+    <div class="rendered"><p><img src="https://via.placeholder.com/150" alt="Alt text" title="Optional title"></p></div>
+  </div>
+
+  <!-- Code -->
+  <h2 id="code">6. Code</h2>
+
+  <h3>Inline Code</h3>
+  <div class="example">
+    <pre><code>Use the `printf()` function.</code></pre>
+    <div class="rendered"><p>Use the <code>printf()</code> function.</p></div>
+  </div>
+
+  <h3>Fenced Code Blocks</h3>
+  <div class="example">
+    <pre><code>```python
+def greet(name):
+    print(f"Hello, {name}!")
+```</code></pre>
+    <div class="rendered"><pre><code>def greet(name):
+    print(f"Hello, {name}!")
+</code></pre></div>
+  </div>
+
+  <!-- Blockquotes -->
+  <h2 id="blockquotes">7. Blockquotes</h2>
+  <div class="example">
+    <pre><code>> This is a quote.
+>> 
+>> > Nested quote.</code></pre>
+    <div class="rendered">
+      <blockquote>
+        <p>This is a quote.</p>
+        <blockquote>
+          <p>Nested quote.</p>
+        </blockquote>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- Tables -->
+  <h2 id="tables">8. Tables</h2>
+  <p>GFM tables support left, center, right alignment.</p>
+  <div class="example">
+    <pre><code>| Name       | Age | City      |
+|:-----------|:---:|----------:|
+| Alice      |  30 | New York  |
+| Bob        |  25 | San Francisco |</code></pre>
+    <div class="rendered">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Name</th>
+            <th style="text-align:center">Age</th>
+            <th style="text-align:right">City</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align:left">Alice</td>
+            <td style="text-align:center">30</td>
+            <td style="text-align:right">New York</td>
+          </tr>
+          <tr>
+            <td style="text-align:left">Bob</td>
+            <td style="text-align:center">25</td>
+            <td style="text-align:right">San Francisco</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Horizontal Rules -->
+  <h2 id="hr">9. Horizontal Rules</h2>
+  <div class="example">
+    <pre><code>---
+***
+___</code></pre>
+    <div class="rendered"><hr><hr><hr></div>
+  </div>
+
+  <!-- Miscellaneous -->
+  <h2 id="misc">10. Miscellaneous</h2>
+
+  <h3>Strikethrough (GFM)</h3>
+  <div class="example">
+    <pre><code>~~mistake~~</code></pre>
+    <div class="rendered"><p><del>mistake</del></p></div>
+  </div>
+
+  <h3>Task Lists (GFM)</h3>
+  <div class="example">
+    <pre><code>- [x] Done
+- [ ] To do</code></pre>
+    <div class="rendered">
+      <ul>
+        <li><input type="checkbox" checked disabled> Done</li>
+        <li><input type="checkbox" disabled> To do</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Footnotes (GFM)</h3>
+  <div class="example">
+    <pre><code>This is a footnote reference[^1].
+
+[^1]: This is the footnote.</code></pre>
+    <div class="rendered"><p>This is a footnote reference<sup>[1]</sup>.</p>
+      <p id="fn1"><sup>[1]</sup> This is the footnote.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2025 Bocaletto Luca • 
+  <a href="https://github.com/bocaletto-luca" target="_blank">bocaletto-luca</a> • 
+  Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPLv3</a>
+</footer>
+
+</body>
+</html>
