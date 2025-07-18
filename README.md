@@ -1,7 +1,7 @@
 # Editor Markdown | Webapp
 #### Bocaletto Luca
 
-A lightweight, single-page Markdown editor featuring split-view live preview, theme toggle, auto-save, and export capabilities. Fully static—no server required—and optimized for SEO and sharing.
+A lightweight, single-page Markdown editor featuring split-view live preview, theme toggle, auto-save, and export capabilities. Fully static—no server required—and optimized for sharing.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge)](https://bocaletto-luca.github.io/EditorMarkdownWeb/index.html)
 
